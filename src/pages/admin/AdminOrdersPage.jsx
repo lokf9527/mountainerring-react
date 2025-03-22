@@ -64,7 +64,7 @@ export default function AdminOrdersPage () {
       };
 
       useEffect(() => {
-        const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/,"$1",);
+        const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,"$1",);
         axios.defaults.headers.common['Authorization'] = token;
         checkUserLogin();
       }, [])

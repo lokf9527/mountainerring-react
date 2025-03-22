@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateCartData } from "../../redux/cartSlice";
 import { useEffect } from "react";
 import  axios  from "axios";
+import Toast from "../../components/common/Toast"
+import { pushMessage } from "../../redux/toastSlice";
+
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const API_PATH = import.meta.env.VITE_API_PATH;
@@ -25,7 +28,11 @@ export default function Header() {
       const res = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/cart`)
       dispatch(updateCartData(res.data.data))
     } catch (error) {
-      alert('取得購物車列表失敗')
+      const {message} = error.response.data
+          dispatch(pushMessage({
+            text:message.join(""),
+            status:'failed'
+          }))
     }
   }
 
@@ -34,6 +41,7 @@ export default function Header() {
     
   }, []);
     return (
+      <>
         <div
           className="container d-flex flex-column"
         >
@@ -77,6 +85,8 @@ export default function Header() {
             </div>
           </nav>
         </div>
+        <Toast/>
+      </>
     )
   }
   
